@@ -144,7 +144,7 @@ public class HttpConnectionUtils {
         int status;
         try {
             httpClient = HttpClients.createDefault();
-            post.setConfig(CommonDTO.REQUET_TIMEOUT_CONFIG);
+            post.setConfig(CommonDTO.REQUEST_TIMEOUT_CONFIG);
             response = httpClient.execute(post);
             status = response.getStatusLine().getStatusCode(); // http状态码
             entity = response.getEntity();

@@ -136,6 +136,26 @@
             <artifactId>core</artifactId>
             <version>3.1.0</version>
         </dependency>
+
+        <!-- org.apache.poi -->
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi</artifactId>
+            <version>3.15</version>
+        </dependency>
+
+        <!-- BouncyCastle加密 -->
+        <dependency>
+            <groupId>org.bouncycastle</groupId>
+            <artifactId>bcprov-debug-jdk15on</artifactId>
+            <version>1.62</version>
+        </dependency>
+        <dependency>
+            <groupId>org.bouncycastle</groupId>
+            <artifactId>bcpkix-jdk15on</artifactId>
+            <version>1.62</version>
+        </dependency>
+
     </dependencies>
 
     <parent>
