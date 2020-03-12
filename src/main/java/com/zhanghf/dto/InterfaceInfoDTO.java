@@ -22,4 +22,8 @@ public class InterfaceInfoDTO {
      */
     public final static String MASTER_EXTERNAL_SHARING_PLATFORM_URL = "http://10.85.159.206:9990/mutual/partsCenter/serviceEntrance/";
 
+    @Override
+    public String toString() {
+        return "InterfaceInfoDTO{" + "REQUEST_TIMEOUT_CONFIG='" + REQUEST_TIMEOUT_CONFIG + '\'' + '}';
+    }
 }

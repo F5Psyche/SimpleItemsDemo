@@ -11,6 +11,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * xml解析工具类
+ *
  * @author zhanghf
  * @version 1.0
  * @date 16:38 2020/2/10

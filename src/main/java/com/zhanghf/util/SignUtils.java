@@ -98,9 +98,7 @@ public class SignUtils {
         BCECPrivateKey bcecPrivateKey = (BCECPrivateKey) privateKey;
         BigInteger d = bcecPrivateKey.getD();
         byte[] privateKeyId = getPaddedByte(d, 32);
-        SHA256Digest sha256Digest = new SHA256Digest();
-        HMacDSAKCalculator hMacDSAKCalculator = new HMacDSAKCalculator(sha256Digest);
-        ECDSASigner signer = new ECDSASigner(hMacDSAKCalculator);
+        ECDSASigner signer = new ECDSASigner(new HMacDSAKCalculator(new SHA256Digest()));
         ECPrivateKeyParameters privKey = new ECPrivateKeyParameters(new BigInteger(1, privateKeyId),
                 CURVE);
         signer.init(true, privKey);

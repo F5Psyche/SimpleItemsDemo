@@ -1,6 +1,5 @@
 package com.zhanghf.dto;
 
-import org.apache.http.client.config.RequestConfig;
 import org.bouncycastle.asn1.x9.X9ECParameters;
 import org.bouncycastle.crypto.ec.CustomNamedCurves;
 import org.bouncycastle.crypto.params.ECDomainParameters;

@@ -30,6 +30,13 @@ import java.util.List;
 
 import static com.zhanghf.dto.InterfaceInfoDTO.REQUEST_TIMEOUT_CONFIG;
 
+/**
+ * http接口调用类
+ *
+ * @author zhanghf
+ * @version 1.0
+ * @date 9:07 2020/3/12
+ */
 @Slf4j
 public class HttpConnectionUtils {
 

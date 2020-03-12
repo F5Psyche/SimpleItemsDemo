@@ -6,6 +6,13 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.io.*;
 
+/**
+ * 公共工具类
+ *
+ * @author zhanghf
+ * @version 1.0
+ * @date 9:07 2020/3/12
+ */
 @Slf4j
 public class CommonUtils {
 

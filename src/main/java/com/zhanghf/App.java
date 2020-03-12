@@ -5,6 +5,9 @@ import com.zhanghf.po.AddressInfo;
 import com.zhanghf.po.ExtMatTab;
 import org.springframework.util.CollectionUtils;
 
+import static com.zhanghf.dto.CommonDTO.CHARSET_NAME;
+import static com.zhanghf.dto.InterfaceInfoDTO.REQUEST_TIMEOUT_CONFIG;
+
 /**
  * @author zhanghf
  * @version 1.0
@@ -22,5 +25,8 @@ public class App {
         addressInfo.setAddress("地址");
         flag = CollectionUtils.isEmpty(JSON.parseObject(JSON.toJSONString(addressInfo)));
         System.out.println(flag);
+
+
+        System.out.println("InterfaceInfoDTO{" + "REQUEST_TIMEOUT_CONFIG='" + CHARSET_NAME + '\'' + '}');
     }
 }
