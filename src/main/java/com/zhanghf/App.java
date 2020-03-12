@@ -16,11 +16,11 @@ public class App {
     }
 
     public static void main(String[] args) {
-        AddressInfo adressInfo = new AddressInfo();
-        boolean flag = CollectionUtils.isEmpty(JSON.parseObject(JSON.toJSONString(adressInfo)));
+        AddressInfo addressInfo = new AddressInfo();
+        boolean flag = CollectionUtils.isEmpty(JSON.parseObject(JSON.toJSONString(addressInfo)));
         System.out.println(flag);
-        adressInfo.setAddress("地址");
-        flag = CollectionUtils.isEmpty(JSON.parseObject(JSON.toJSONString(adressInfo)));
+        addressInfo.setAddress("地址");
+        flag = CollectionUtils.isEmpty(JSON.parseObject(JSON.toJSONString(addressInfo)));
         System.out.println(flag);
     }
 }
