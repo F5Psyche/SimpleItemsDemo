@@ -3,7 +3,7 @@ package com.zhanghf;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.gov.api.response.AtgBizMatterqueryMatterQuerydetailResponse;
-import com.zhanghf.po.AdressInfo;
+import com.zhanghf.po.AddressInfo;
 import com.zhanghf.util.XmlMapUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
@@ -208,11 +208,11 @@ public class AppTest {
         String simpleName = acceptAddresss.get(key).getClass().getSimpleName();
         try {
             if ("JSONObject".equals(simpleName)) {
-                AdressInfo adressInfo = acceptAddresss.getObject(key, AdressInfo.class);
+                AddressInfo adressInfo = acceptAddresss.getObject(key, AddressInfo.class);
                 System.out.println(adressInfo);
             } else if ("JSONArray".equals(simpleName)) {
-                List<AdressInfo> adressInfos = JSON.parseArray(acceptAddresss.getString(key), AdressInfo.class);
-                for (AdressInfo adressInfo : adressInfos) {
+                List<AddressInfo> adressInfos = JSON.parseArray(acceptAddresss.getString(key), AddressInfo.class);
+                for (AddressInfo adressInfo : adressInfos) {
                     System.out.println(adressInfo);
                 }
             }

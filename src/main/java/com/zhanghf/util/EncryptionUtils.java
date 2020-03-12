@@ -33,7 +33,7 @@ public class EncryptionUtils {
                 //传入要加密的字符串
                 messageDigest.update(encryptionText.getBytes(CHARSET_NAME));
                 //得到byte数组
-                byte byteBuffer[] = messageDigest.digest();
+                byte[] byteBuffer = messageDigest.digest();
                 //将byte数组转成String类型
                 StringBuffer buffer = new StringBuffer();
                 //遍历byte数组

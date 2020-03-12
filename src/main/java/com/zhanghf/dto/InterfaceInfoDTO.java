@@ -17,5 +17,9 @@ public class InterfaceInfoDTO {
 
     public final static String RELEASE_EXTERNAL_SHARING_PLATFORM_URL = "http://10.85.159.206:10420/mutual/partsCenter/serviceEntrance/";
 
-    public final static String MASTER_EXTERNAL_SHARING_PLATFORM_URL = "http://10.85.159.249:10420/mutual/partsCenter/serviceEntrance/";
+    /**
+     * 10.85.159.249:10420
+     */
+    public final static String MASTER_EXTERNAL_SHARING_PLATFORM_URL = "http://10.85.159.206:9990/mutual/partsCenter/serviceEntrance/";
+
 }

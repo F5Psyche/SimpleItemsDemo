@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.zhanghf.dto.CommonDTO;
+import com.zhanghf.enums.HTTPCodeEnum;
 import com.zhanghf.vo.ResultVo;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpEntity;
@@ -151,7 +152,7 @@ public class HttpConnectionUtils {
             httpClient = HttpClients.createDefault();
             post.setConfig(REQUEST_TIMEOUT_CONFIG);
             response = httpClient.execute(post);
-            status = response.getStatusLine().getStatusCode(); // http状态码
+            status = response.getStatusLine().getStatusCode();
             entity = response.getEntity();
             responseContent = EntityUtils.toString(entity, CommonDTO.CHARSET_NAME);
         } catch (Exception e) {
@@ -167,11 +168,10 @@ public class HttpConnectionUtils {
                 }
             } catch (Exception e) {
                 log.error("uuid={}, errMsg={}", uuid, e.toString());
-                return e.toString();
             }
         }
         log.info("uuid={}, status={}, responseContent={}", uuid, status, responseContent);
-        if (status != 200) {
+        if (status != HTTPCodeEnum.OK.getCode()) {
             return "httpStatus<" + status + ">请求错误";
         }
         return JSONObject.parse(responseContent);

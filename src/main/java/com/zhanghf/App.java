@@ -1,12 +1,14 @@
 package com.zhanghf;
 
 import com.alibaba.fastjson.JSON;
-import com.zhanghf.po.AdressInfo;
+import com.zhanghf.po.AddressInfo;
 import com.zhanghf.po.ExtMatTab;
 import org.springframework.util.CollectionUtils;
 
 /**
- * Hello world!
+ * @author zhanghf
+ * @version 1.0
+ * @date 21:20 2020/3/6
  */
 public class App {
     public void extMatInfoSave(ExtMatTab info) {
@@ -14,7 +16,7 @@ public class App {
     }
 
     public static void main(String[] args) {
-        AdressInfo adressInfo = new AdressInfo();
+        AddressInfo adressInfo = new AddressInfo();
         boolean flag = CollectionUtils.isEmpty(JSON.parseObject(JSON.toJSONString(adressInfo)));
         System.out.println(flag);
         adressInfo.setAddress("地址");
