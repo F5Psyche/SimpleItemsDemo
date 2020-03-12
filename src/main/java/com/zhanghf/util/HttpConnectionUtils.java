@@ -18,11 +18,16 @@ import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 import org.springframework.util.CollectionUtils;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.zhanghf.dto.InterfaceInfoDTO.REQUEST_TIMEOUT_CONFIG;
 
 @Slf4j
 public class HttpConnectionUtils {
@@ -144,7 +149,7 @@ public class HttpConnectionUtils {
         int status;
         try {
             httpClient = HttpClients.createDefault();
-            post.setConfig(CommonDTO.REQUEST_TIMEOUT_CONFIG);
+            post.setConfig(REQUEST_TIMEOUT_CONFIG);
             response = httpClient.execute(post);
             status = response.getStatusLine().getStatusCode(); // http状态码
             entity = response.getEntity();
@@ -167,7 +172,7 @@ public class HttpConnectionUtils {
         }
         log.info("uuid={}, status={}, responseContent={}", uuid, status, responseContent);
         if (status != 200) {
-            return "httpSatus<" + status + ">请求错误";
+            return "httpStatus<" + status + ">请求错误";
         }
         return JSONObject.parse(responseContent);
     }

@@ -14,8 +14,6 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
 
     <dependencies>
@@ -86,12 +84,7 @@
             <artifactId>lombok</artifactId>
             <version>1.18.8</version>
         </dependency>
-        <!-- AES加解密之AES-128-CBC算法 -->
-        <dependency>
-            <groupId>org.bouncycastle</groupId>
-            <artifactId>bcprov-jdk16</artifactId>
-            <version>1.46</version>
-        </dependency>
+
 
         <!-- http -->
         <dependency>
@@ -144,7 +137,7 @@
             <version>3.15</version>
         </dependency>
 
-        <!-- BouncyCastle加密 -->
+        <!-- BouncyCastle -->
         <dependency>
             <groupId>org.bouncycastle</groupId>
             <artifactId>bcprov-debug-jdk15on</artifactId>
@@ -155,6 +148,7 @@
             <artifactId>bcpkix-jdk15on</artifactId>
             <version>1.62</version>
         </dependency>
+
 
     </dependencies>
 
