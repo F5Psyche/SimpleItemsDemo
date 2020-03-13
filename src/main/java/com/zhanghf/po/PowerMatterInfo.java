@@ -87,7 +87,10 @@ public class PowerMatterInfo {
     private String leadDept;//实施或牵头的处（科）室名称
     private String outProcess;//外部流程图
 
-    private String superviseMethod;//监督投诉方式
+    /**
+     * 监督投诉方式
+     */
+    private String superviseMethod;
 
 //    private String onlineAppoint;//在线预约
 //    private String appOnlineAppointment;//是否APP端在线预约，1表示可以，0表示不可以

@@ -6,8 +6,12 @@ import org.bouncycastle.crypto.params.ECDomainParameters;
 
 import java.math.BigInteger;
 
+/**
+ * @author zhanghf
+ * @version 1.0
+ * @date 14:26 2020/3/12
+ */
 public class CommonDTO {
-
 
 
     public static final String CHARSET_NAME = "UTF-8";
@@ -48,4 +52,9 @@ public class CommonDTO {
      * ECC k1 n
      */
     public static final BigInteger HALF_CURVE_ORDER = CURVE_PARAMS.getN().shiftRight(1);
+
+    @Override
+    public String toString() {
+        return "CommonDTO{CHARSET_NAME=" + CHARSET_NAME + ",HEADER_NAME=" + HEADER_NAME + '}';
+    }
 }

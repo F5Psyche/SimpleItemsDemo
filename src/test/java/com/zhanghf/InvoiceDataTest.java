@@ -2,6 +2,7 @@ package com.zhanghf;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.zhanghf.dto.InterfaceInfoDTO;
 import com.zhanghf.util.HttpConnectionUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
@@ -25,7 +26,7 @@ public class InvoiceDataTest {
     public void mutualCode7206() {
         String uuid = UUID.randomUUID().toString();
         long start_time = System.currentTimeMillis();
-        String url = RELEASE_EXTERNAL_SHARING_PLATFORM_URL + 7206;
+        String url = InterfaceInfoDTO.RELEASE_EXTERNAL_SHARING_PLATFORM_URL + 7206;
         System.out.println(url);
         JSONObject params = new JSONObject();
         params.put("payerId", "342423199511066261");//330102195605240080

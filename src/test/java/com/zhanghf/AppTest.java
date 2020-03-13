@@ -14,9 +14,9 @@ import java.util.Map;
 @Slf4j
 public class AppTest {
 
-    private final static String dtos = "[{\"materialNecessityDesc\":\"\",\"instructions\":\"\",\"gmtModified\":\"\",\"bizCode\":\"\",\"sourceChannel\":\"1\",\"memo\":\"\",\"mtIssueUnit\":\"\",\"sampleForm\":\"\",\"sourceChannelDesc\":\"\",\"blankForm\":\"\",\"materialForm\":\"4\",\"materialNecessity\":\"1\",\"materialExtMap\":{},\"id\":\"0\",\"blankFormName\":\"\",\"paperMaterialSpecific\":\"原件\",\"requestMaterialBasis\":\"\",\"materialType\":\"1\",\"sort\":\"1\",\"gmtCreate\":\"\",\"materialName\":\"社会保障卡\",\"materialDetailRequires\":\"\",\"impleCode\":\"bb4a9da36852d21c0168925f9cb519672331619995000\",\"paperMaterialNums\":\"1\",\"acceptCriteria\":\"\",\"sampleFormName\":\"\",\"localMaterialId\":\"7bd81477-e039-4d91-82e8-9a0cb2a92ace\",\"rq\":\"0\"}]";
+    private static final String dtos = "[{\"materialNecessityDesc\":\"\",\"instructions\":\"\",\"gmtModified\":\"\",\"bizCode\":\"\",\"sourceChannel\":\"1\",\"memo\":\"\",\"mtIssueUnit\":\"\",\"sampleForm\":\"\",\"sourceChannelDesc\":\"\",\"blankForm\":\"\",\"materialForm\":\"4\",\"materialNecessity\":\"1\",\"materialExtMap\":{},\"id\":\"0\",\"blankFormName\":\"\",\"paperMaterialSpecific\":\"原件\",\"requestMaterialBasis\":\"\",\"materialType\":\"1\",\"sort\":\"1\",\"gmtCreate\":\"\",\"materialName\":\"社会保障卡\",\"materialDetailRequires\":\"\",\"impleCode\":\"bb4a9da36852d21c0168925f9cb519672331619995000\",\"paperMaterialNums\":\"1\",\"acceptCriteria\":\"\",\"sampleFormName\":\"\",\"localMaterialId\":\"7bd81477-e039-4d91-82e8-9a0cb2a92ace\",\"rq\":\"0\"}]";
 
-    private final static String ACCEPTADDRESS = "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"no\"?>\n" +
+    private static final String ACCEPTADDRESS = "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"no\"?>\n" +
             "<DATAAREA>\n" +
             "<ACCEPT_ADDRESSS>\n" +
             "<ACCEPT_ADDRESS>\n" +
@@ -29,7 +29,7 @@ public class AppTest {
             "</ACCEPT_ADDRESSS>\n" +
             "</DATAAREA>";
 
-    private final static String ACCEPTADDRESS2 = "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"no\"?>\n" +
+    private static final String ACCEPTADDRESS2 = "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"no\"?>\n" +
             "<DATAAREA>\n" +
             "<ACCEPT_ADDRESSS>\n" +
             "<ACCEPT_ADDRESS>\n" +
