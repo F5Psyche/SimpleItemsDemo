@@ -67,8 +67,8 @@ public class InvoiceDataTest {
         JSONObject params = new JSONObject();
         List<String> list = new ArrayList<>();
         list.add("330601202324590319");
-        list.add("330601202324588882");
-        list.add("330601202324588514");
+        //list.add("330601202324588882");
+        //list.add("330601202324588514");
         params.put("eInvoiceIDs", list);
         params.put("personID", "330103197903280721");//身份证号
         params.put("corpID", "330800100005");//医疗机构代码
@@ -86,12 +86,12 @@ public class InvoiceDataTest {
         JSONObject params = new JSONObject();
         List<String> list = new ArrayList<>();
         list.add("330601202324590319");
-        list.add("330601202324588882");
-        list.add("330601202324588514");
+        //list.add("330601202324588882");
+        //list.add("330601202324588514");
         List<String> list2 = new ArrayList<>();
         list2.add("0");
-        list2.add("0");
-        list2.add("0");
+        //list2.add("0");
+        //list2.add("0");
         params.put("eInvoiceIds", list);
         params.put("claimAmounts", list2);
         params.put("insuranceCoId", "330800100005");//医疗机构代码

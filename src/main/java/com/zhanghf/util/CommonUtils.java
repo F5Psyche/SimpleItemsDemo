@@ -16,6 +16,10 @@ import java.io.*;
 @Slf4j
 public class CommonUtils {
 
+    private CommonUtils() {
+        throw new IllegalStateException("CommonUtils");
+    }
+
     /**
      * 将异常信息转换为字符串
      *

@@ -1,7 +1,11 @@
 package com.zhanghf;
 
-import com.zhanghf.enums.BusinessCodeEnum;
+import com.alibaba.fastjson.JSON;
+import com.zhanghf.vo.ResultVo;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.poi.ss.formula.functions.T;
+import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
 
 /**
  * @author zhanghf
@@ -11,17 +15,28 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class App {
 
+    public static boolean entityEmpty(String uuid, Object object) {
+        if (StringUtils.isEmpty(object)) {
+            return true;
+        } else {
+            String data = JSON.toJSONString(object);
+            String simpleName = object.getClass().getSimpleName();
+            switch (simpleName) {
+                case "String":
+                    return StringUtils.isEmpty(data);
+                case "ArrayList":
+                case "JSONArray":
+                    return CollectionUtils.isEmpty(JSON.parseArray(data));
+                default:
+                    log.info("uuid={}, simpleName={}, object={}", uuid, simpleName, object);
+                    return CollectionUtils.isEmpty(JSON.parseObject(data));
+
+            }
+        }
+    }
+
     public static void main(String[] args) {
-//        AddressInfo addressInfo = new AddressInfo();
-//        boolean flag = CollectionUtils.isEmpty(JSON.parseObject(JSON.toJSONString(addressInfo)));
-//        log.info("flag={}", flag);
-//        addressInfo.setAddress("地址");
-//        flag = CollectionUtils.isEmpty(JSON.parseObject(JSON.toJSONString(addressInfo)));
-//        log.info("flag={}", flag);
-
-        String code = BusinessCodeEnum.getCode("传入参数有误真的");
-        String msg = BusinessCodeEnum.getMsg("传入参数有误真的");
-        System.out.println(code + msg);
-
+        Long matProcId = -9L;
+        System.out.println(matProcId);
     }
 }
