@@ -17,4 +17,7 @@ public class ExtMatTab {
     private String entityname;
     private String localinnercode;
     private String localrowguid;
+
+    private Integer warnTime;
+    private Integer endTime;
 }

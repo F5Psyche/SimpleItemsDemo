@@ -6,27 +6,33 @@ package com.zhanghf.enums;
  * @date 10:35 2020/3/11
  */
 public enum BusinessCodeEnum {
-    /**
-     * 交易请求成功
-     */
     SUCCESS("0000", "成功!"),
-    TRADE_CODE_NOT_FIND("01", "交易码不存在"),
-    PARAMS_ERROR("02", "传入参数有误"),
-    COL_MUST_FILL("03", "字段不能为空"),
-    MYSQL_DATA_ERROR("04", "联系相关人员"),
-    DATA_SAVE_ERROR("05", "数据存储失败"),
-    DATA_DELETE_ERROR("06", "数据删除失败"),
-    DATA_UPDATE_ERROR("07", "数据更新失败"),
-    DATA_QUERY_ERROR("08", "数据查询失败"),
-    CHOICE_COL_MUST_FILL("04", "条件性字段不能为空"),
-    REQUEST_KEY_FALSE("10", "请求密钥获取失败"),
-    IMAGE_NOT_GET("11", "财政版式文件未获取"),
-    QZ_TYPE("12", "签章类型"),
-    READ_TIMEOUT("13", "连接超时"),
+    TRADE_CODE_NOT_FIND("2201", "交易码不存在"),
+    PARAMS_ERROR("2202", "传入参数有误"),
+    COL_MUST_FILL("2203", "字段不能为空"),
+    CONTENT_EMPTY("2204", "内容不能为空"),
+    /**
+     * 数据库数据有误,联系相关人员
+     */
+    MYSQL_DATA_ERROR("2205", "联系相关人员"),
+    DATA_SAVE_ERROR("2206", "数据存储失败"),
+    DATA_DELETE_ERROR("2207", "数据删除失败"),
+    DATA_UPDATE_ERROR("2208", "数据更新失败"),
+    DATA_QUERY_ERROR("2209", "数据查询失败"),
+    LOGIN_INFO_EMPTY("2210", "登陆用户信息获取失败"),
+
+    TIME_LIMIT_ERROR("2221", "预警时限不能大于办理时限"),
+    SERVICE_CODE_ERROR("2222", "事项基本码格式错误"),
+    MATTER_PROCESS_NOT_FIND("2223", "事项流程不存在"),
+    MATTER_PROCESS_TOO_MANY("2224", "涉及到的事项流程大于1"),
+    MATTER_IS_EXIST("2225", "事项已经存在"),
+    MOULD_NAME_IS_EXIST("2226", "模板名称已经存在"),
+    REQUEST_URL_ERROR("2227", "请求地址错误"),
 
 
-    DATA_QUERY_NULL("90", "没有查询到相关数据"),
-    UNKNOWN_ERROR("99", "未知异常"),
+    DATA_QUERY_NULL("2290", "没有查询到相关数据"),
+
+    UNKNOWN_ERROR("2299", "未知异常"),
     ;
 
     private String code;

@@ -3,6 +3,7 @@ package com.zhanghf;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.zhanghf.dto.InterfaceInfoDTO;
+import com.zhanghf.po.ClaimRecord;
 import com.zhanghf.util.HttpConnectionUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
@@ -51,13 +52,30 @@ public class InvoiceDataTest {
         JSONObject params = new JSONObject();
         List<String> list = new ArrayList<>();
         list.add("3502847785-68269698");
-        params.put("corpId", "11330000MB18470516");
         params.put("eInvoiceIds", list);
-        params.put("payerId", "330411199403303638");
+        params.put("payerId", "725705683346688243");
         params.put("sequenceId", "123");
         Object object = HttpConnectionUtils.httpConnectionPost(uuid, url, params);
         System.out.println(object);
     }
+
+
+    @Test
+    public void mutualCode7208() {
+        String uuid = UUID.randomUUID().toString();
+        String url = RELEASE_EXTERNAL_SHARING_PLATFORM_URL + 7208;
+        JSONObject params = new JSONObject();
+        ClaimRecord claimRecord = new ClaimRecord();
+        claimRecord.setEInvoiceId("3502847785-68269698");
+        claimRecord.setClaimAmount("0");
+        List<ClaimRecord> list = new ArrayList<>();
+        list.add(claimRecord);
+        params.put("claimRecords", list);
+        params.put("caseId", "123");
+        Object object = HttpConnectionUtils.httpConnectionPost(uuid, url, params);
+        log.info("params={}, object={}",params,object);
+    }
+
 
 
     @Test

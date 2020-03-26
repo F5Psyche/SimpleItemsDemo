@@ -1,15 +1,16 @@
 package com.zhanghf;
 
 import com.alibaba.fastjson.JSONObject;
+import com.zhanghf.dto.InterfaceInfoDTO;
 import com.zhanghf.util.HttpConnectionUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.codec.binary.Base64;
 import org.junit.Test;
+import sun.misc.BASE64Encoder;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.util.UUID;
-
-import static com.zhanghf.dto.InterfaceInfoDTO.RELEASE_EXTERNAL_SHARING_PLATFORM_URL;
 
 /**
  * @author zhanghf
@@ -22,22 +23,25 @@ public class CloudSignatureTest {
     @Test
     public void mutualCode8301() {
         String uuid = UUID.randomUUID().toString();
-        String url = RELEASE_EXTERNAL_SHARING_PLATFORM_URL + 8301;
-        FileInputStream fis;
+        String url = InterfaceInfoDTO.MASTER_EXTERNAL_SHARING_PLATFORM_URL + 8301;
         JSONObject params = new JSONObject();
-        try {
-            File file = new File("D:\\photo\\cbzmInfo.pdf");
-            fis = new FileInputStream(file);
-            byte[] byt = new byte[fis.available()]; // 字节数据 available()
-            fis.read(byt); // 从输入流中读取一定数量的字节，并将其存储在缓冲区数组 b 中。以整数形式返回实际读取的字节数。
-            //System.out.println(new BASE64Encoder().encode(byt));//base64码,每76个字符增加一个换行符
+        File file = new File("D:\\photo\\63fa3668-5f73-4728-b8ad-b892c81dcb54.pdf");
+        try (
+                FileInputStream fis = new FileInputStream(file)
+        ) {
+            // 字节数据 available()
+            byte[] byt = new byte[fis.available()];
+            // 从输入流中读取一定数量的字节，并将其存储在缓冲区数组 b 中。以整数形式返回实际读取的字节数。
+            Integer nums = fis.read(byt);
+            String base64Code = Base64.encodeBase64String(byt);
+            log.info("nums={}, base64Code={}", nums, base64Code);
             params.put("srcpdffile", byt);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        params.put("srcpdffile", "http://ybj.zjzwfw.gov.cn:10540/openapiApp/download?key=bizamt/rdm/1569210553684tLK.pdf");
-        params.put("keyword", "盖章");
-        params.put("typepdffile", "1");
+        //params.put("srcpdffile", "http://ybj.zjzwfw.gov.cn:10540/openapiApp/download?key=bizamt/rdm/1569210553684tLK.pdf");
+        params.put("keyword", "大写");
+        params.put("typepdffile", "2");
         params.put("signType", "4");
         params.put("sealid", "25538");
         Object data = HttpConnectionUtils.httpConnectionPost(uuid, url, params);
