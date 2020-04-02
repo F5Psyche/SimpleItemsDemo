@@ -30,7 +30,7 @@ public class InvoiceDataTest {
         String url = InterfaceInfoDTO.RELEASE_EXTERNAL_SHARING_PLATFORM_URL + 7206;
         System.out.println(url);
         JSONObject params = new JSONObject();
-        params.put("payerId", "342423199511066261");//330102195605240080
+        params.put("payerId", "330502201812094928");//330102195605240080
         //params.put("invoicePartyCode", "330000102001");//
         //params.put("invoicePartyName", "义乌市中心医院");//
         //params.put("beginDate", "20190101");
