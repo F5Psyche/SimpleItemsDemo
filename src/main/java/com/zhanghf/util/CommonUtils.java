@@ -156,7 +156,7 @@ public class CommonUtils {
             resultVo.setResult("");
             resultVo.setCode("8099");
             resultVo.setResultDes(e.toString());
-            log.error("<inputStreamToString.Exception>uuid={}, errMsg={}", uuid, exceptionToString(e));
+            log.error("uuid={}, errMsg={}", uuid, exceptionToString(e));
         } finally {
             try {
                 if (bufferedReader != null) {

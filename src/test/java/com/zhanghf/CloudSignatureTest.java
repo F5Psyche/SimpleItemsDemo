@@ -6,7 +6,6 @@ import com.zhanghf.util.HttpConnectionUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.binary.Base64;
 import org.junit.Test;
-import sun.misc.BASE64Encoder;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -23,7 +22,8 @@ public class CloudSignatureTest {
     @Test
     public void mutualCode8301() {
         String uuid = UUID.randomUUID().toString();
-        String url = InterfaceInfoDTO.MASTER_EXTERNAL_SHARING_PLATFORM_URL + 8301;
+        String url = InterfaceInfoDTO.RELEASE_EXTERNAL_SHARING_PLATFORM_URL + 8301;
+        System.out.println(url);
         JSONObject params = new JSONObject();
         File file = new File("D:\\photo\\63fa3668-5f73-4728-b8ad-b892c81dcb54.pdf");
         try (
@@ -43,7 +43,8 @@ public class CloudSignatureTest {
         params.put("keyword", "大写");
         params.put("typepdffile", "2");
         params.put("signType", "4");
-        params.put("sealid", "25538");
+        //params.put("sealid", "25538");
+        params.put("signatureAppKey","33000000031835");
         Object data = HttpConnectionUtils.httpConnectionPost(uuid, url, params);
         System.out.println(data);
     }

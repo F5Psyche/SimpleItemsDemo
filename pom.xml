@@ -149,6 +149,13 @@
             <version>1.62</version>
         </dependency>
 
+        <!-- Reflections扫描包 -->
+        <dependency>
+            <groupId>org.reflections</groupId>
+            <artifactId>reflections</artifactId>
+            <version>0.9.11</version>
+        </dependency>
+
 
     </dependencies>
 

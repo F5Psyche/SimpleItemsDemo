@@ -1,6 +1,7 @@
 package com.zhanghf;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.zhanghf.util.HttpConnectionUtils;
 import com.zhanghf.util.XmlMapUtils;
@@ -10,7 +11,7 @@ import java.util.Map;
 
 public class PowerMatterInfoListTest {
 
-    private static final String initUrl = "http://10.85.159.203:10420/mutual/partsCenter/serviceEntrance/";
+    private static final String initUrl = "http://10.85.159.206:10420/mutual/partsCenter/serviceEntrance/";
 
     @Test
     public void getOrganInfoTest() {
@@ -57,10 +58,10 @@ public class PowerMatterInfoListTest {
 //            System.out.println(json.get(key));
 //            System.out.println("******************");
             if ("basicInfoDTO".equals(key)) {
-                String acceptAddress = json.getJSONObject("basicInfoDTO").getString("acceptAddress");
+                String acceptAddress = json.getJSONObject("basicInfoDTO").getString("matName");
                 System.out.println(acceptAddress);
-                Map<String, Object> map = XmlMapUtils.xmlToMap(acceptAddress);
-                System.out.println(map);
+//                Map<String, Object> map = XmlMapUtils.xmlToMap(acceptAddress);
+//                System.out.println(map);
             }
         });
     }
@@ -69,17 +70,25 @@ public class PowerMatterInfoListTest {
     public void getSinglePowerMatterInfoTest() {
         String url = initUrl + "8205";
         JSONObject params = new JSONObject();
-        params.put("ouGuid", "001008001026246");
-        params.put("jurisCode", "330101");
+        params.put("ouGuid", "001003148");
+        params.put("jurisCode", "330000");
+       // params.put("current","3");
+        params.put("size","100");
         Object obj = HttpConnectionUtils.httpConnectionPost("", url, params);
         JSONObject jsonObject = JSON.parseObject(JSON.toJSONString(obj)).getJSONArray("result").getJSONObject(0);
         String data = jsonObject.getString("basicInfoDTOs");
-        JSONObject json = JSON.parseArray(data).getJSONObject(0);
-        json.keySet().forEach(key -> {
-            System.out.println("key = " + key);
-            System.out.println(json.get(key));
-            System.out.println("******************");
-        });
+        JSONArray array = JSON.parseArray(data);
+        int size = array.size();
+        for (int i = 0; i < size; i++) {
+            JSONObject json = array.getJSONObject(i);
+            System.out.println(json.get("matName"));
+        }
+//        JSONObject json = JSON.parseArray(data).getJSONObject(0);
+//        json.keySet().forEach(key -> {
+//            System.out.println("key = " + key);
+//            System.out.println(json.get(key));
+//            System.out.println("******************");
+//        });
         //atg.biz.matterquery.matter.querydetail
         //AtgBizMatterqueryMatterQuerydetailResponse
 //        List<PowerMatterInfo> basicInfoDTOS = JSON.parseArray(data, PowerMatterInfo.class);

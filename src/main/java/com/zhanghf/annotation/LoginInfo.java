@@ -19,8 +19,11 @@ import java.lang.annotation.*;
  * @date 15:44 2020/3/25
  */
 @Documented
-@Target(ElementType.FIELD)
+@Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface CheckNull {
-    String message();
+public @interface LoginInfo {
+
+    String loginName() default "";
+
+    String passWord() default "";
 }
