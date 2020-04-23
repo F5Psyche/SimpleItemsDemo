@@ -3,7 +3,7 @@ package com.zhanghf.util;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.zhanghf.dto.CommonDTO;
+import com.zhanghf.constant.CommonDMO;
 import com.zhanghf.enums.HTTPCodeEnum;
 import com.zhanghf.vo.ResultVo;
 import lombok.extern.slf4j.Slf4j;
@@ -28,7 +28,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.zhanghf.dto.InterfaceInfoDTO.REQUEST_TIMEOUT_CONFIG;
+import static com.zhanghf.constant.InterfaceInfoDMO.REQUEST_TIMEOUT_CONFIG;
 
 /**
  * http接口调用类
@@ -58,10 +58,10 @@ public class HttpConnectionUtils {
             connection.setRequestMethod("POST");
             connection.setUseCaches(false);
             connection.setInstanceFollowRedirects(true);
-            connection.setRequestProperty(CommonDTO.HEADER_NAME, CommonDTO.HEADER_VALUE);
+            connection.setRequestProperty(CommonDMO.HEADER_NAME, CommonDMO.HEADER_VALUE);
             connection.connect();
             OutputStream outputStream = connection.getOutputStream();
-            outputStream.write(json.toJSONString().getBytes(CommonDTO.CHARSET_NAME));
+            outputStream.write(json.toJSONString().getBytes(CommonDMO.CHARSET_NAME));
             InputStream inputStream = connection.getInputStream();
             resultVo = CommonUtils.inputStreamToString(uuid, inputStream);
             status = connection.getResponseCode();
@@ -110,7 +110,7 @@ public class HttpConnectionUtils {
                 }
             }
             log.info("uuid={}, list={}", uuid, list);
-            post.setEntity(new UrlEncodedFormEntity(list, CommonDTO.CHARSET_NAME));
+            post.setEntity(new UrlEncodedFormEntity(list, CommonDMO.CHARSET_NAME));
         } catch (Exception e) {
             log.error("uuid={}, errMsg={}", uuid, e.toString());
             return e.toString();
@@ -128,13 +128,13 @@ public class HttpConnectionUtils {
     public static Object httpClientPost(String uuid, String httpUrl, Object object, JSONObject header) {
         HttpPost post = new HttpPost(httpUrl);
         try {
-            post.setHeader(CommonDTO.HEADER_NAME, CommonDTO.HEADER_VALUE);
+            post.setHeader(CommonDMO.HEADER_NAME, CommonDMO.HEADER_VALUE);
             if (!CollectionUtils.isEmpty(header)) {
                 header.keySet().forEach(key -> {
                     post.setHeader(key, header.getString(key));
                 });
             }
-            byte[] bytes = object.toString().getBytes(CommonDTO.CHARSET_NAME);
+            byte[] bytes = object.toString().getBytes(CommonDMO.CHARSET_NAME);
             post.setEntity(new ByteArrayEntity(bytes));
         } catch (UnsupportedEncodingException e) {
             log.error("uuid={}, errMsg={}", uuid, e.toString());
@@ -161,7 +161,7 @@ public class HttpConnectionUtils {
             response = httpClient.execute(post);
             status = response.getStatusLine().getStatusCode();
             entity = response.getEntity();
-            responseContent = EntityUtils.toString(entity, CommonDTO.CHARSET_NAME);
+            responseContent = EntityUtils.toString(entity, CommonDMO.CHARSET_NAME);
         } catch (Exception e) {
             log.error("uuid={}, errMsg={}", uuid, e.toString());
             return e.toString();

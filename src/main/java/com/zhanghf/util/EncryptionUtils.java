@@ -4,7 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.security.MessageDigest;
 
-import static com.zhanghf.dto.CommonDTO.CHARSET_NAME;
+import static com.zhanghf.constant.CommonDMO.CHARSET_NAME;
 
 /**
  * 加密工具类

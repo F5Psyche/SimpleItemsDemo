@@ -1,7 +1,7 @@
 package com.zhanghf.util;
 
 import com.alibaba.fastjson.JSON;
-import com.zhanghf.dto.CommonDTO;
+import com.zhanghf.constant.CommonDMO;
 import com.zhanghf.enums.BusinessCodeEnum;
 import com.zhanghf.vo.ResultVo;
 import lombok.extern.slf4j.Slf4j;
@@ -144,7 +144,7 @@ public class CommonUtils {
         BufferedReader bufferedReader = null;
         StringBuffer buffer = new StringBuffer();
         try {
-            inputStreamReader = new InputStreamReader(inputStream, CommonDTO.CHARSET_NAME);
+            inputStreamReader = new InputStreamReader(inputStream, CommonDMO.CHARSET_NAME);
             bufferedReader = new BufferedReader(inputStreamReader);
             String lines;
             while ((lines = bufferedReader.readLine()) != null) {

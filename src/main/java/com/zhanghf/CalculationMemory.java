@@ -1,7 +1,7 @@
 package com.zhanghf;
 
-import static com.zhanghf.dto.CommonDTO.SHA_256_TYPE;
-import static com.zhanghf.dto.CommonDTO.SHA_512_TYPE;
+import static com.zhanghf.constant.CommonDMO.SHA_256_TYPE;
+import static com.zhanghf.constant.CommonDMO.SHA_512_TYPE;
 
 /**
  * 计算内存
@@ -25,6 +25,6 @@ public class CalculationMemory {
         //你本地物理内存的四分之一，误差在百分之十之内。
         System.out.println("最大内存" + maxMemory / (1024 * 1024) + "兆");
 
-        System.out.println("InterfaceInfoDTO{" + "REQUEST_TIMEOUT_CONFIG='" + SHA_256_TYPE + "'\tLOCALHOST_EXTERNAL_SHARING_PLATFORM_URL='" + SHA_512_TYPE + '\'' + '}');
+        System.out.println("InterfaceInfoDMO{" + "REQUEST_TIMEOUT_CONFIG='" + SHA_256_TYPE + "'\tLOCALHOST_EXTERNAL_SHARING_PLATFORM_URL='" + SHA_512_TYPE + '\'' + '}');
     }
 }

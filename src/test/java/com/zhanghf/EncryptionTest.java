@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import static com.zhanghf.dto.CommonDTO.*;
+import static com.zhanghf.constant.CommonDMO.*;
 
 /**
  * @author zhanghf

@@ -1,4 +1,4 @@
-package com.zhanghf.dto;
+package com.zhanghf.constant;
 
 import org.bouncycastle.asn1.x9.X9ECParameters;
 import org.bouncycastle.crypto.ec.CustomNamedCurves;
@@ -11,7 +11,7 @@ import java.math.BigInteger;
  * @version 1.0
  * @date 14:26 2020/3/12
  */
-public class CommonDTO {
+public class CommonDMO {
 
 
     public static final String CHARSET_NAME = "UTF-8";
@@ -55,6 +55,6 @@ public class CommonDTO {
 
     @Override
     public String toString() {
-        return "CommonDTO{CHARSET_NAME=" + CHARSET_NAME + ",HEADER_NAME=" + HEADER_NAME + '}';
+        return "CommonDMO{CHARSET_NAME=" + CHARSET_NAME + ",HEADER_NAME=" + HEADER_NAME + '}';
     }
 }

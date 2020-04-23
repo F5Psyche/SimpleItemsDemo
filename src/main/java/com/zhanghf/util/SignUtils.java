@@ -27,7 +27,7 @@ import java.security.PrivateKey;
 import java.security.Security;
 import java.util.Base64;
 
-import static com.zhanghf.dto.CommonDTO.*;
+import static com.zhanghf.constant.CommonDMO.*;
 
 /**
  * 签名工具类

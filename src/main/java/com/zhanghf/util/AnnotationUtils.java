@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * @author zhanghf
@@ -61,7 +60,7 @@ public class AnnotationUtils {
                     String uName = annotation.loginName();
                     String passWord = annotation.passWord();
                     log.info("uName={}, passWord={}", uName, passWord);
-                    if (uName.equals(map.get("userName"))){
+                    if (uName.equals(map.get("userName"))) {
                         try {
                             method.invoke(clazz.newInstance(), map);
                         } catch (Exception e) {
@@ -77,7 +76,7 @@ public class AnnotationUtils {
 
     public static void main(String[] args) {
         Map<String, String> map = new HashMap<>();
-        map.put("userName","admin");
+        map.put("userName", "admin");
         new AnnotationUtils().gateWay(map);
     }
 }
