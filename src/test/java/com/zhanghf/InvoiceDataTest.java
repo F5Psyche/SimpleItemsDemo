@@ -33,8 +33,8 @@ public class InvoiceDataTest {
         params.put("payerId", "330502201812094928");//330102195605240080
         //params.put("invoicePartyCode", "330000102001");//
         //params.put("invoicePartyName", "义乌市中心医院");//
-        //params.put("beginDate", "20190101");
-        //params.put("endDate", "20191122");
+//        params.put("beginDate", "20190101");
+//        params.put("endDate", "20191122");
         params.put("page", "1");
         params.put("pageSize", "30");
         Object data = HttpConnectionUtils.httpConnectionPost(uuid, url, params);

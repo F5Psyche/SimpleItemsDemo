@@ -25,7 +25,7 @@ public class CloudSignatureTest {
         String url = InterfaceInfoDMO.RELEASE_EXTERNAL_SHARING_PLATFORM_URL + 8301;
         System.out.println(url);
         JSONObject params = new JSONObject();
-        File file = new File("D:\\photo\\63fa3668-5f73-4728-b8ad-b892c81dcb54.pdf");
+        File file = new File("D:\\photo\\xcbjfjsdzd.pdf");
         try (
                 FileInputStream fis = new FileInputStream(file)
         ) {
@@ -40,11 +40,11 @@ public class CloudSignatureTest {
             e.printStackTrace();
         }
         //params.put("srcpdffile", "http://ybj.zjzwfw.gov.cn:10540/openapiApp/download?key=bizamt/rdm/1569210553684tLK.pdf");
-        params.put("keyword", "大写");
+        params.put("keyword", "省医疗保障");
         params.put("typepdffile", "2");
         params.put("signType", "4");
         //params.put("sealid", "25538");
-        params.put("signatureAppKey","33000000031835");
+        //params.put("signatureAppKey","33000000031835");
         Object data = HttpConnectionUtils.httpConnectionPost(uuid, url, params);
         System.out.println(data);
     }

@@ -1,17 +1,12 @@
 package com.zhanghf;
 
-import com.alibaba.fastjson.JSON;
 import com.zhanghf.po.WfMenuConfigInfo;
 import com.zhanghf.util.CommonUtils;
-import com.zhanghf.util.HttpConnectionUtils;
-import com.zhanghf.vo.InnerMatterMaterialInfoVO;
 import com.zhanghf.vo.MatterProcessMenuVO;
 import com.zhanghf.vo.MenuValueVO;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.util.StringUtils;
 
-import java.lang.reflect.Field;
-import java.util.*;
+import java.util.List;
 
 /**
  * @author zhanghf
@@ -126,22 +121,29 @@ public class App {
     }
 
     public static void main(String[] args) {
-        String uuid = UUID.randomUUID().toString();
-        InnerMatterMaterialInfoVO vo = JSON.parseObject(text1, InnerMatterMaterialInfoVO.class);
-        Object object = HttpConnectionUtils.httpConnectionPost(UUID.randomUUID().toString(),"http://localhost:8080/annotation/test",JSON.parseObject(text1));
-        System.out.println(object);
+//        String uuid = UUID.randomUUID().toString();
+//        InnerMatterMaterialInfoVO vo = JSON.parseObject(text1, InnerMatterMaterialInfoVO.class);
+//        Object object = HttpConnectionUtils.httpConnectionPost(UUID.randomUUID().toString(), "http://localhost:8080/annotation/test", JSON.parseObject(text1));
+//        System.out.println(object);
+//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+//        try {
+//            Long timestamp = sdf.parse("2020-01-31").getTime();
+//            log.info("timestamp={}", timestamp);
+//        } catch (ParseException e) {
+//            log.error("errMsg={}", e.getMessage());
+//        }
+//        SimpleDateFormat format = null;
+//        try {
+//            format = new SimpleDateFormat("yyyyMMdd");
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//
+//        log.info("format={}",format.format(System.currentTimeMillis()));
+        //String s = "\"1\".equals(\"1\")";
+        //log.info("flag={}, s={}", Boolean.valueOf(s), s);
 
     }
-
-
-
-
-
-
-
-
-
-
 
 
 }
