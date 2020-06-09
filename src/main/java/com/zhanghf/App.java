@@ -1,12 +1,19 @@
 package com.zhanghf;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.zhanghf.po.WfMenuConfigInfo;
 import com.zhanghf.util.CommonUtils;
+import com.zhanghf.util.HttpConnectionUtils;
+import com.zhanghf.util.TreeFormUtils;
 import com.zhanghf.vo.MatterProcessMenuVO;
 import com.zhanghf.vo.MenuValueVO;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author zhanghf
@@ -101,7 +108,9 @@ public class App {
             if (CommonUtils.entityNotEmpty(uuid, children)) {
                 menuConfigInfosSave(uuid, matProcNodeId, vo.getAreaCode(), children);
             }
+
             List<MenuValueVO> menuValueList = vo.getMenuValueList();
+
             for (MenuValueVO menuValueVO : menuValueList) {
                 WfMenuConfigInfo menuConfigInfo = new WfMenuConfigInfo();
                 menuConfigInfo.setMatProcNodeId(matProcNodeId);
@@ -121,27 +130,26 @@ public class App {
     }
 
     public static void main(String[] args) {
-//        String uuid = UUID.randomUUID().toString();
-//        InnerMatterMaterialInfoVO vo = JSON.parseObject(text1, InnerMatterMaterialInfoVO.class);
-//        Object object = HttpConnectionUtils.httpConnectionPost(UUID.randomUUID().toString(), "http://localhost:8080/annotation/test", JSON.parseObject(text1));
-//        System.out.println(object);
-//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-//        try {
-//            Long timestamp = sdf.parse("2020-01-31").getTime();
-//            log.info("timestamp={}", timestamp);
-//        } catch (ParseException e) {
-//            log.error("errMsg={}", e.getMessage());
-//        }
-//        SimpleDateFormat format = null;
-//        try {
-//            format = new SimpleDateFormat("yyyyMMdd");
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//
-//        log.info("format={}",format.format(System.currentTimeMillis()));
-        //String s = "\"1\".equals(\"1\")";
-        //log.info("flag={}, s={}", Boolean.valueOf(s), s);
+        JSONObject param = new JSONObject();
+        param.put("matterCode", "公共服务-00512-002");
+        param.put("type", "1");
+        Long startTime = System.currentTimeMillis();
+        Object data = HttpConnectionUtils.httpConnectionPost("", "http://10.85.159.203:10420/mutual/gov/api/share/8050", param);
+        JSONArray array = JSON.parseObject(JSON.toJSONString(data)).getJSONArray("result");
+        int size = array.size();
+        JSONArray t = new JSONArray();
+        for (int i = 0; i < size; i++) {
+            JSONObject item = array.getJSONObject(i);
+            Map mapTemp = new HashMap();
+            mapTemp.put("text", item.get("AAE044"));
+            mapTemp.put("value", item.get("AAB301"));
+            mapTemp.put("valuePar", item.get("AAB304"));
+            t.add(mapTemp);
+        }
+        JSONArray s = TreeFormUtils.listToTreeUtils(t, "value", "valuePar", "children");
+        Long endTime = System.currentTimeMillis();
+        log.info("data={}", data);
+        log.info("times={}，s={}", endTime - startTime, s);
 
     }
 

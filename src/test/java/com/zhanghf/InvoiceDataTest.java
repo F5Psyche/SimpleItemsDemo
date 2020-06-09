@@ -1,11 +1,13 @@
 package com.zhanghf;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.zhanghf.constant.InterfaceInfoDMO;
 import com.zhanghf.po.ClaimRecord;
 import com.zhanghf.util.HttpConnectionUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -27,10 +29,10 @@ public class InvoiceDataTest {
     public void mutualCode7206() {
         String uuid = UUID.randomUUID().toString();
         long start_time = System.currentTimeMillis();
-        String url = InterfaceInfoDMO.RELEASE_EXTERNAL_SHARING_PLATFORM_URL + 7206;
+        String url = InterfaceInfoDMO.FEATURE_EXTERNAL_SHARING_PLATFORM_URL + 7206;
         System.out.println(url);
         JSONObject params = new JSONObject();
-        params.put("payerId", "330502201812094928");//330102195605240080
+        params.put("payerId", "33010319780924162X");//330102195605240080
         //params.put("invoicePartyCode", "330000102001");//
         //params.put("invoicePartyName", "义乌市中心医院");//
 //        params.put("beginDate", "20190101");

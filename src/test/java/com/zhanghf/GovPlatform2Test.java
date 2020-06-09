@@ -49,8 +49,10 @@ public class GovPlatform2Test {
 
     @Test
     public void mutualTest(){
-        String url = InterfaceInfoDMO.FEATURE_EXTERNAL_SHARING_PLATFORM_IP + "/mutual/gov/api/share/8050";
+        String url = InterfaceInfoDMO.FEATURE_EXTERNAL_SHARING_PLATFORM_IP + "/mutual/gov/api/share/8048";
         JSONObject params = new JSONObject();
+        params.put("matterCode","确认-00253-002");
+        params.put("areaCode","339900");
         JSONObject data = (JSONObject)HttpConnectionUtils.httpConnectionPost("", url, params);
         System.out.println(TreeFormUtils.listToTreeUtils(data.getJSONArray("result"), "AAB301", "AAB304", "children"));
     }

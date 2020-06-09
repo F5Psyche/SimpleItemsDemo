@@ -4,9 +4,11 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.zhanghf.util.HttpConnectionUtils;
-import com.zhanghf.util.XmlMapUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;
 
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 
 public class PowerMatterInfoListTest {
@@ -32,7 +34,7 @@ public class PowerMatterInfoListTest {
             String url = initUrl + "8205";
             JSONObject params = new JSONObject();
             params.put("jurisCode", i);
-            params.put("ouGuid", "001008010006109");
+            params.put("ouGuid", "001008003002128");
             Object object = HttpConnectionUtils.httpConnectionPost("", url, params);
             System.out.println(object);
             JSONObject jsonObject = JSON.parseObject(JSON.toJSONString(object)).getJSONArray("result").getJSONObject(0);
@@ -72,8 +74,9 @@ public class PowerMatterInfoListTest {
         JSONObject params = new JSONObject();
         params.put("ouGuid", "001003148");
         params.put("jurisCode", "330000");
-       // params.put("current","3");
-        params.put("size","100");
+        params.put("includeFather", true);
+        // params.put("current","3");
+        params.put("size", "100");
         Object obj = HttpConnectionUtils.httpConnectionPost("", url, params);
         JSONObject jsonObject = JSON.parseObject(JSON.toJSONString(obj)).getJSONArray("result").getJSONObject(0);
         String data = jsonObject.getString("basicInfoDTOs");
@@ -81,7 +84,12 @@ public class PowerMatterInfoListTest {
         int size = array.size();
         for (int i = 0; i < size; i++) {
             JSONObject json = array.getJSONObject(i);
-            System.out.println(json.get("matName"));
+            String serviceCodeId = json.get("impleType") + "-" + json.get("mainItemCode") + "-" + json.get("subItemCode");
+            if ("1".equals(json.get("detailItem"))) {
+                serviceCodeId = serviceCodeId + "-" + json.get("detailItemCode");
+            }
+            System.out.println(serviceCodeId + "\t" + json.get("matName"));
+
         }
 //        JSONObject json = JSON.parseArray(data).getJSONObject(0);
 //        json.keySet().forEach(key -> {
@@ -106,5 +114,13 @@ public class PowerMatterInfoListTest {
         params.put("localInnerCode", "");
         Object data = HttpConnectionUtils.httpClientPost("", url, params);
         System.out.println(data);
+
+        Map map = new HashMap();
+
+        String text = "";
+        map.put("text", text);
+
+
+
     }
 }

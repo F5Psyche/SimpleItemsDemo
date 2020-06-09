@@ -57,6 +57,7 @@ public class HttpConnectionUtils {
             connection.setDoOutput(true);
             connection.setRequestMethod("POST");
             connection.setUseCaches(false);
+            connection.setConnectTimeout(300000);
             connection.setInstanceFollowRedirects(true);
             connection.setRequestProperty(CommonDMO.HEADER_NAME, CommonDMO.HEADER_VALUE);
             connection.connect();
