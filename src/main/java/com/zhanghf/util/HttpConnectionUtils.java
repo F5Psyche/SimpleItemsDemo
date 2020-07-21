@@ -1,11 +1,9 @@
 package com.zhanghf.util;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.zhanghf.constant.CommonDMO;
 import com.zhanghf.enums.HTTPCodeEnum;
-import com.zhanghf.vo.ResultVo;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpEntity;
 import org.apache.http.NameValuePair;
@@ -25,6 +23,7 @@ import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,10 +45,7 @@ public class HttpConnectionUtils {
      * @param json 请求参数
      * @return 返回参数
      */
-    public static Object httpConnectionPost(String uuid, String uri, JSONObject json) {
-        ResultVo<String> resultVo = new ResultVo<>();
-        int status = 0;
-        String message = "";
+    public static String httpConnectionPost(String uuid, String uri, JSONObject json) {
         try {
             URL url = new URL(uri);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -62,21 +58,17 @@ public class HttpConnectionUtils {
             connection.setRequestProperty(CommonDMO.HEADER_NAME, CommonDMO.HEADER_VALUE);
             connection.connect();
             OutputStream outputStream = connection.getOutputStream();
-            outputStream.write(json.toJSONString().getBytes(CommonDMO.CHARSET_NAME));
+            outputStream.write(json.toJSONString().getBytes(StandardCharsets.UTF_8));
             InputStream inputStream = connection.getInputStream();
-            resultVo = CommonUtils.inputStreamToString(uuid, inputStream);
-            status = connection.getResponseCode();
-            message = connection.getResponseMessage();
+            String responseContent = CommonUtils.inputStreamToString(uuid, inputStream);
+            int status = connection.getResponseCode();
+            String message = connection.getResponseMessage();
             connection.disconnect();
+            log.info("uuid={}, status={}, message={}, responseContent={}", uuid, status, message, responseContent);
+            return responseContent;
         } catch (IOException e) {
-            log.error("uuid={}, status={}, message={}, resultVo={}, errMsg={}", uuid, status, message, resultVo, e.toString());
-            return e.toString();
-        }
-        log.info("uuid={}, status={}, message={}, resultVo={}", uuid, status, message, resultVo);
-        try {
-            return JSON.parse(resultVo.getResult());
-        } catch (Exception e) {
-            return resultVo.getResult();
+            log.error("uuid={}, errMsg={}", uuid, CommonUtils.exceptionToString(e));
+            return null;
         }
     }
 
@@ -113,7 +105,7 @@ public class HttpConnectionUtils {
             log.info("uuid={}, list={}", uuid, list);
             post.setEntity(new UrlEncodedFormEntity(list, CommonDMO.CHARSET_NAME));
         } catch (Exception e) {
-            log.error("uuid={}, errMsg={}", uuid, e.toString());
+            log.error("uuid={}, errMsg={}", uuid, e.getMessage());
             return e.toString();
         }
         return httpPostUsing(uuid, post);

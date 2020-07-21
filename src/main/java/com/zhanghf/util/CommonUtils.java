@@ -1,15 +1,19 @@
 package com.zhanghf.util;
 
 import com.alibaba.fastjson.JSON;
-import com.zhanghf.constant.CommonDMO;
 import com.zhanghf.enums.BusinessCodeEnum;
 import com.zhanghf.vo.ResultVo;
 import lombok.extern.slf4j.Slf4j;
+import org.icepdf.core.pobjects.Document;
+import org.icepdf.core.util.GraphicsRenderingHints;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 import java.io.*;
 import java.lang.reflect.Field;
+import java.nio.charset.StandardCharsets;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -36,19 +40,31 @@ public class CommonUtils {
      * @return 字符串
      */
     public static String exceptionToString(Exception e) {
-        PrintWriter pw = null;
-        try {
-            StringWriter sw = new StringWriter();
-            pw = new PrintWriter(sw);
+        try (
+                StringWriter sw = new StringWriter();
+                PrintWriter pw = new PrintWriter(sw)
+        ) {
+
             e.printStackTrace(pw);
             return sw.toString();
         } catch (Exception ex) {
             return "ExceptionToString is error";
-        } finally {
-            if (pw != null) {
-                pw.close();
-            }
         }
+    }
+
+    public static byte[] convertBytes(String uuid, Object obj) {
+        try (
+                ByteArrayOutputStream byteOutputStream = new ByteArrayOutputStream();
+                ObjectOutputStream outputStream = new ObjectOutputStream(byteOutputStream)
+        ) {
+            outputStream.writeObject(obj);
+            outputStream.flush();
+            return byteOutputStream.toByteArray();
+        } catch (Exception e) {
+            log.error("uuid={}, errMsg={}", uuid, exceptionToString(e));
+            return new byte[0];
+        }
+
     }
 
 
@@ -134,44 +150,85 @@ public class CommonUtils {
     }
 
     /**
+     * 输入流转换成字符串
+     *
      * @param uuid        唯一识别码
      * @param inputStream InputStream
-     * @return ResultVo
+     * @return 字符串
      */
-    public static ResultVo<String> inputStreamToString(String uuid, InputStream inputStream) {
-        ResultVo<String> resultVo = new ResultVo<>();
-        InputStreamReader inputStreamReader = null;
-        BufferedReader bufferedReader = null;
-        StringBuffer buffer = new StringBuffer();
-        try {
-            inputStreamReader = new InputStreamReader(inputStream, CommonDMO.CHARSET_NAME);
-            bufferedReader = new BufferedReader(inputStreamReader);
+    public static String inputStreamToString(String uuid, InputStream inputStream) {
+        StringBuilder builder = new StringBuilder();
+        try (
+                InputStreamReader inputStreamReader = new InputStreamReader(inputStream, StandardCharsets.UTF_8);
+                BufferedReader bufferedReader = new BufferedReader(inputStreamReader)
+        ) {
             String lines;
             while ((lines = bufferedReader.readLine()) != null) {
-                buffer.append(lines);
+                builder.append(lines);
             }
-            resultVo.setResult(buffer.toString());
-            resultVo.setSuccess(true);
+            return builder.toString();
         } catch (Exception e) {
-            resultVo.setResult("");
-            resultVo.setCode("8099");
-            resultVo.setResultDes(e.toString());
             log.error("uuid={}, errMsg={}", uuid, exceptionToString(e));
-        } finally {
-            try {
-                if (bufferedReader != null) {
-                    bufferedReader.close();
-                }
-                if (inputStreamReader != null) {
-                    inputStreamReader.close();
-                }
-            } catch (IOException e) {
-                resultVo.setResult("");
-                resultVo.setCode("8099");
-                resultVo.setResultDes(e.toString());
-                log.error("<inputStreamToString.IOException>uuid={}, errMsg={}", uuid, exceptionToString(e));
-            }
         }
-        return resultVo;
+        return null;
+    }
+
+    /**
+     * 多页pdf进行转换
+     *
+     * @param uuid        唯一识别码
+     * @param filePath    路径
+     * @param pdfFileName 文件名称
+     * @param jpgFileName 文件名称
+     */
+    public static void updateImageType(String uuid, String filePath, String pdfFileName, String jpgFileName) {
+        Document document = new Document();
+        try {
+            document.setFile(filePath + pdfFileName);
+            // 缩放比例
+            float scale = 2.5f;
+            // 旋转角度
+            float rotation = 0f;
+            int pageSize = document.getNumberOfPages();
+            for (int i = 0; i < pageSize; i++) {
+                BufferedImage image = (BufferedImage) document.getPageImage(i,
+                        GraphicsRenderingHints.SCREEN,
+                        org.icepdf.core.pobjects.Page.BOUNDARY_CROPBOX, rotation,
+                        scale);
+                File file = new File(filePath + i + jpgFileName);
+                ImageIO.write(image, "jpg", file);
+                image.flush();
+            }
+        } catch (Exception e) {
+            log.info("uuid={}, filePath={}, pdfFileName={}, jpgFileName={}, errMsg={}", uuid, filePath, pdfFileName, jpgFileName, exceptionToString(e));
+        }
+        document.dispose();
+    }
+
+
+    public static boolean updateImageType(String uuid, String filePath, File file) {
+        boolean flag = false;
+        Document document = new Document();
+        try {
+            document.setFile(filePath);
+            // 缩放比例
+            float scale = 2.5f;
+            // 旋转角度
+            float rotation = 0f;
+            int pageSize = document.getNumberOfPages();
+            if (pageSize == 1) {
+                BufferedImage image = (BufferedImage) document.getPageImage(pageSize - 1,
+                        GraphicsRenderingHints.SCREEN,
+                        org.icepdf.core.pobjects.Page.BOUNDARY_CROPBOX, rotation,
+                        scale);
+                ImageIO.write(image, "jpg", file);
+                image.flush();
+                flag = true;
+            }
+        } catch (Exception e) {
+            log.info("uuid={}, filePath={}, file={}, errMsg={}", uuid, filePath, file, exceptionToString(e));
+        }
+        document.dispose();
+        return flag;
     }
 }

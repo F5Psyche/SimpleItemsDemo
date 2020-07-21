@@ -1,19 +1,14 @@
 package com.zhanghf;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
 import com.zhanghf.po.WfMenuConfigInfo;
 import com.zhanghf.util.CommonUtils;
-import com.zhanghf.util.HttpConnectionUtils;
-import com.zhanghf.util.TreeFormUtils;
 import com.zhanghf.vo.MatterProcessMenuVO;
 import com.zhanghf.vo.MenuValueVO;
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.HashMap;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author zhanghf
@@ -130,27 +125,16 @@ public class App {
     }
 
     public static void main(String[] args) {
-        JSONObject param = new JSONObject();
-        param.put("matterCode", "公共服务-00512-002");
-        param.put("type", "1");
-        Long startTime = System.currentTimeMillis();
-        Object data = HttpConnectionUtils.httpConnectionPost("", "http://10.85.159.203:10420/mutual/gov/api/share/8050", param);
-        JSONArray array = JSON.parseObject(JSON.toJSONString(data)).getJSONArray("result");
-        int size = array.size();
-        JSONArray t = new JSONArray();
-        for (int i = 0; i < size; i++) {
-            JSONObject item = array.getJSONObject(i);
-            Map mapTemp = new HashMap();
-            mapTemp.put("text", item.get("AAE044"));
-            mapTemp.put("value", item.get("AAB301"));
-            mapTemp.put("valuePar", item.get("AAB304"));
-            t.add(mapTemp);
-        }
-        JSONArray s = TreeFormUtils.listToTreeUtils(t, "value", "valuePar", "children");
-        Long endTime = System.currentTimeMillis();
-        log.info("data={}", data);
-        log.info("times={}，s={}", endTime - startTime, s);
+        String beginDate = "1592294740137";
+        SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
+        log.info("beginDate={}", format.format(Long.valueOf(beginDate)));
 
+        try {
+            String endDate = "20200519";
+            log.info("endDate={}", format.parse(endDate).getTime());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 
 

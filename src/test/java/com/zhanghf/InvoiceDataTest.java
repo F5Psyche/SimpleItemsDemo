@@ -1,13 +1,11 @@
 package com.zhanghf;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.zhanghf.constant.InterfaceInfoDMO;
 import com.zhanghf.po.ClaimRecord;
 import com.zhanghf.util.HttpConnectionUtils;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -75,9 +73,8 @@ public class InvoiceDataTest {
         params.put("claimRecords", list);
         params.put("caseId", "123");
         Object object = HttpConnectionUtils.httpConnectionPost(uuid, url, params);
-        log.info("params={}, object={}",params,object);
+        log.info("params={}, object={}", params, object);
     }
-
 
 
     @Test

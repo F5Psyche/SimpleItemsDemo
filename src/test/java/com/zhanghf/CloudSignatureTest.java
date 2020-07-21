@@ -30,7 +30,7 @@ public class CloudSignatureTest {
     @Test
     public void mutualCode8301() {
         String uuid = UUID.randomUUID().toString();
-        String url = InterfaceInfoDMO.RELEASE_EXTERNAL_SHARING_PLATFORM_URL + 8301;
+        String url = InterfaceInfoDMO.MASTER_EXTERNAL_SHARING_PLATFORM_URL + 8301;
         System.out.println(url);
         JSONObject params = new JSONObject();
         File file = new File("D:\\photo\\cbzmInfo_comp.pdf");
@@ -42,7 +42,7 @@ public class CloudSignatureTest {
             // 从输入流中读取一定数量的字节，并将其存储在缓冲区数组 b 中。以整数形式返回实际读取的字节数。
             Integer nums = fis.read(byt);
             String base64Code = Base64.encodeBase64String(byt);
-            log.info("nums={}, base64Code={}", nums, base64Code);
+            //log.info("nums={}, base64Code={}", nums, base64Code);
             params.put("srcpdffile", byt);
         } catch (Exception e) {
             e.printStackTrace();
@@ -54,9 +54,15 @@ public class CloudSignatureTest {
         params.put("signType", "4");
         //params.put("sealid", "25538");
         //params.put("signatureAppKey","33000000031835");
-        log.info("params={}", params);
-        Object data = HttpConnectionUtils.httpConnectionPost(uuid, url, params);
-        System.out.println(data);
+        //log.info("params={}", params);
+        for (int i = 0; i < 200; i++) {
+            String data = HttpConnectionUtils.httpConnectionPost(uuid, url, params);
+            System.out.println(data);
+            if (data.contains("外部系统繁忙,请稍后再试")) {
+                break;
+            }
+        }
+
 
     }
 

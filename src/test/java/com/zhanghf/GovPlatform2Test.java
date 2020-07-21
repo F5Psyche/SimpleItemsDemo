@@ -1,17 +1,12 @@
 package com.zhanghf;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.zhanghf.constant.InterfaceInfoDMO;
 import com.zhanghf.util.HttpConnectionUtils;
 import com.zhanghf.util.TreeFormUtils;
-import com.zhanghf.vo.ResultVo;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * @author zhanghf
@@ -48,12 +43,12 @@ public class GovPlatform2Test {
     }
 
     @Test
-    public void mutualTest(){
+    public void mutualTest() {
         String url = InterfaceInfoDMO.FEATURE_EXTERNAL_SHARING_PLATFORM_IP + "/mutual/gov/api/share/8048";
         JSONObject params = new JSONObject();
-        params.put("matterCode","确认-00253-002");
-        params.put("areaCode","339900");
-        JSONObject data = (JSONObject)HttpConnectionUtils.httpConnectionPost("", url, params);
+        params.put("matterCode", "确认-00253-002");
+        params.put("areaCode", "339900");
+        JSONObject data = JSON.parseObject(HttpConnectionUtils.httpConnectionPost("", url, params));
         System.out.println(TreeFormUtils.listToTreeUtils(data.getJSONArray("result"), "AAB301", "AAB304", "children"));
     }
 }

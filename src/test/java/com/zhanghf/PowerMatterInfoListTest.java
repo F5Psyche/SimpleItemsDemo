@@ -13,7 +13,7 @@ import java.util.Map;
 
 public class PowerMatterInfoListTest {
 
-    private static final String initUrl = "http://10.85.159.206:10420/mutual/partsCenter/serviceEntrance/";
+    private static final String initUrl = "http://10.85.159.249:10420/mutual/partsCenter/serviceEntrance/";
 
     @Test
     public void getOrganInfoTest() {
@@ -73,12 +73,14 @@ public class PowerMatterInfoListTest {
         String url = initUrl + "8205";
         JSONObject params = new JSONObject();
         params.put("ouGuid", "001003148");
-        params.put("jurisCode", "330000");
+        //params.put("jurisCode", "330000");
         params.put("includeFather", true);
+        //params.put("matCode","33060000701901");
         // params.put("current","3");
         params.put("size", "100");
-        Object obj = HttpConnectionUtils.httpConnectionPost("", url, params);
-        JSONObject jsonObject = JSON.parseObject(JSON.toJSONString(obj)).getJSONArray("result").getJSONObject(0);
+        String obj = HttpConnectionUtils.httpConnectionPost("", url, params);
+        System.out.println(obj);
+        JSONObject jsonObject = JSON.parseObject(obj).getJSONArray("result").getJSONObject(0);
         String data = jsonObject.getString("basicInfoDTOs");
         JSONArray array = JSON.parseArray(data);
         int size = array.size();

@@ -162,6 +162,13 @@
             <scope>test</scope>
         </dependency>
 
+        <!-- icePDF -->
+        <dependency>
+            <groupId>org.icepdf.os</groupId>
+            <artifactId>icepdf-core</artifactId>
+            <version>6.2.2</version>
+        </dependency>
+
 
     </dependencies>
 
