@@ -1,6 +1,5 @@
 package com.zhanghf;
 
-import com.alibaba.gov.fastjson.JSON;
 import com.zhanghf.po.ClaimRecord;
 import com.zhanghf.util.CommonUtils;
 import lombok.extern.slf4j.Slf4j;
