@@ -1,8 +1,10 @@
 package com.zhanghf;
 
 import com.zhanghf.po.ClaimRecord;
-import com.zhanghf.util.CommonUtils;
+import com.zhanghf.vo.ResultVo;
 import lombok.extern.slf4j.Slf4j;
+
+import java.util.UUID;
 
 /**
  * @author zhanghf
@@ -13,10 +15,17 @@ import lombok.extern.slf4j.Slf4j;
 public class BytesStudy {
 
     public static void main(String[] args) {
-        ClaimRecord claimRecord = new ClaimRecord();
-        claimRecord.setClaimAmount("30");
-        claimRecord.setEInvoiceId("123");
-        byte[] bytes = CommonUtils.convertBytes("", claimRecord);
-        log.info("bytes={}", bytes);
+        String uuid = UUID.randomUUID().toString();
+        ResultVo<ClaimRecord> resultVo = new ResultVo<>();
+        log.info("resultVo={}", getExceptionResult(uuid));
+        resultVo = getExceptionResult(uuid);
+    }
+
+
+    public static <T> ResultVo<T> getExceptionResult(String uuid) {
+        ResultVo<T> resultVo = new ResultVo<>();
+        resultVo.setRequestId(uuid);
+        log.info("uuid={}, clz={}", uuid, resultVo.getClass());
+        return resultVo;
     }
 }

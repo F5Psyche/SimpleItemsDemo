@@ -2,7 +2,6 @@ package com.zhanghf;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.alibaba.gov.api.response.AtgBizMatterqueryMatterQuerydetailResponse;
 import com.zhanghf.po.AddressInfo;
 import com.zhanghf.util.XmlMapUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -199,7 +198,7 @@ public class AppTest {
     @Test
     public void httpTest() {
         //atg.biz.matterquery.matter.querydetail
-        AtgBizMatterqueryMatterQuerydetailResponse response = null;
+        //AtgBizMatterqueryMatterQuerydetailResponse response = null;
         Map<String, Object> map = XmlMapUtils.xmlToMap(ACCEPTADDRESS2);
         String dataArea = JSON.toJSONString(map.get("DATAAREA"));
         JSONObject json = JSON.parseObject(dataArea);
