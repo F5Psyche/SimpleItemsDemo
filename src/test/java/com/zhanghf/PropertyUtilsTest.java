@@ -1,13 +1,10 @@
 package com.zhanghf;
 
-import com.google.common.collect.Lists;
-import com.zhanghf.vo.ResultVo;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.beanutils.PropertyUtils;
 import org.junit.Test;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.sql.SQLException;
+import java.util.Scanner;
 
 /**
  * @author zhanghf
@@ -18,17 +15,15 @@ import java.util.Map;
 public class PropertyUtilsTest {
 
     @Test
-    public void test() {
-        try {
-            Map<String, Object> map = new HashMap<>(5);
-            map.put("success", true);
-            map.put("result", Lists.newArrayList("1", "2"));
-            ResultVo resultVo = new ResultVo();
-            log.info("map={}, resultVo={}", map, resultVo);
-            PropertyUtils.copyProperties(resultVo, map);
-            log.info("map={}, resultVo={}", map, resultVo);
-        } catch (Exception e) {
-            e.printStackTrace();
+    public void test() throws Exception {
+        int x = 1;
+        int y = 2;
+        Scanner input = new Scanner(System.in);
+        int z = input.nextInt();
+        if (x == z) {
+            throw new SQLException("xx");
+        } else {
+            throw new SQLException("zz");
         }
     }
 }

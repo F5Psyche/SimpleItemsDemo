@@ -1,9 +1,12 @@
 package com.zhanghf.util;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zhanghf.constant.CommonDMO;
 import com.zhanghf.enums.HTTPCodeEnum;
+import com.zhanghf.vo.ResultVo;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpEntity;
 import org.apache.http.NameValuePair;
@@ -17,15 +20,14 @@ import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 import org.springframework.util.CollectionUtils;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static com.zhanghf.constant.InterfaceInfoDMO.REQUEST_TIMEOUT_CONFIG;
 
@@ -58,7 +60,9 @@ public class HttpConnectionUtils {
             connection.setRequestProperty(CommonDMO.HEADER_NAME, CommonDMO.HEADER_VALUE);
             connection.connect();
             OutputStream outputStream = connection.getOutputStream();
-            outputStream.write(json.toJSONString().getBytes(StandardCharsets.UTF_8));
+            String data = JSON.toJSONString(json == null ? "{}" : json);
+            byte[] bytes = data.getBytes(StandardCharsets.UTF_8);
+            outputStream.write(bytes);
             InputStream inputStream = connection.getInputStream();
             String responseContent = CommonUtils.inputStreamToString(uuid, inputStream);
             int status = connection.getResponseCode();
@@ -70,6 +74,64 @@ public class HttpConnectionUtils {
             log.error("uuid={}, errMsg={}", uuid, CommonUtils.exceptionToString(e));
             return null;
         }
+    }
+
+
+    public static ResultVo<String> managePost(String url, Object object, String interfaceCode) throws Exception {
+        Map<String, Object> stringObjectMap = new HashMap<>();
+        stringObjectMap.put("interfaceData", object);
+        stringObjectMap.put("interfaceCode", interfaceCode);
+        System.out.println(new ObjectMapper().writeValueAsString(stringObjectMap));
+        URL u = new URL(url);
+        HttpURLConnection con = null;
+        // 构建符合经办端的请求参数
+        StringBuilder sb = new StringBuilder();
+        sb.append("method=execGm&jsonData=").append(new ObjectMapper().writeValueAsString(stringObjectMap));
+        //发送请求
+        try {
+            con = (HttpURLConnection) u.openConnection();
+            //POST 只能为大写，严格限制，post会不识别
+            con.setRequestMethod("POST");
+            con.setDoOutput(true);
+            con.setDoInput(true);
+            con.setUseCaches(false);
+            con.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+            OutputStream outputStream = con.getOutputStream();
+            OutputStreamWriter osw = new OutputStreamWriter(outputStream, "GBK");
+            System.out.println(sb);
+            osw.write(sb.toString());
+            osw.flush();
+            osw.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (con != null) {
+                con.disconnect();
+            }
+        }
+        // 读取返回内容
+        StringBuilder buffer = new StringBuilder();
+        try {
+            //一定要有返回值，否则无法把请求发送给server端。
+            if (con != null) {
+                BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream(), "GBK"));
+                String temp;
+                while ((temp = br.readLine()) != null) {
+                    buffer.append(temp);
+                    buffer.append("\n");
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        JSONObject resultJson = JSON.parseObject(buffer.toString());
+        System.out.println(resultJson);
+        ResultVo resultVo = new ResultVo<String>();
+        resultVo.setResult(resultJson.get("result"));
+        resultVo.setCode(resultJson.getJSONObject("data").getString("resultData"));
+        resultVo.setSuccess(resultJson.getJSONObject("data").getBoolean("resultCode"));
+        resultVo.setResultDes(resultJson.getJSONObject("data").getString("resultMsg"));
+        return resultVo;
     }
 
 
@@ -120,19 +182,14 @@ public class HttpConnectionUtils {
      */
     public static Object httpClientPost(String uuid, String httpUrl, Object object, JSONObject header) {
         HttpPost post = new HttpPost(httpUrl);
-        try {
-            post.setHeader(CommonDMO.HEADER_NAME, CommonDMO.HEADER_VALUE);
-            if (!CollectionUtils.isEmpty(header)) {
-                header.keySet().forEach(key -> {
-                    post.setHeader(key, header.getString(key));
-                });
-            }
-            byte[] bytes = object.toString().getBytes(CommonDMO.CHARSET_NAME);
-            post.setEntity(new ByteArrayEntity(bytes));
-        } catch (UnsupportedEncodingException e) {
-            log.error("uuid={}, errMsg={}", uuid, e.toString());
-            return e.toString();
+        post.setHeader(CommonDMO.HEADER_NAME, CommonDMO.HEADER_VALUE);
+        if (!CollectionUtils.isEmpty(header)) {
+            header.keySet().forEach(key -> {
+                post.setHeader(key, header.getString(key));
+            });
         }
+        byte[] bytes = object.toString().getBytes(StandardCharsets.UTF_8);
+        post.setEntity(new ByteArrayEntity(bytes));
         return httpPostUsing(uuid, post);
     }
 

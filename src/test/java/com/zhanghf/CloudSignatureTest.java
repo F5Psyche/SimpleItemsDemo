@@ -33,7 +33,7 @@ public class CloudSignatureTest {
         String url = InterfaceInfoDMO.MASTER_EXTERNAL_SHARING_PLATFORM_URL + 8301;
         System.out.println(url);
         JSONObject params = new JSONObject();
-        File file = new File("D:\\photo\\cbzmInfo_comp.pdf");
+        File file = new File("C:\\photo\\b38cb02a-8c1e-4baa-814f-b2bdda09c63a.pdf");
         try (
                 FileInputStream fis = new FileInputStream(file)
         ) {
@@ -42,27 +42,21 @@ public class CloudSignatureTest {
             // 从输入流中读取一定数量的字节，并将其存储在缓冲区数组 b 中。以整数形式返回实际读取的字节数。
             Integer nums = fis.read(byt);
             String base64Code = Base64.encodeBase64String(byt);
-            //log.info("nums={}, base64Code={}", nums, base64Code);
+            log.info("nums={}, base64Code={}", nums, base64Code);
             params.put("srcpdffile", byt);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        params.put("srcpdffile", "http://ybj.zjzwfw.gov.cn:10540/openapiApp/download?key=bizamt/rdm/1569210553684tLK.pdf");
+        //params.put("srcpdffile", "http://ybj.zjzwfw.gov.cn:10540/openapiApp/download?key=bizamt/rdm/1569210553684tLK.pdf");
         //params.put("srcpdffile", "http://10.85.159.203:10540/openapiApp/download?key=bizamt/rdm/159134552206211J.pdf");
-        params.put("keyword", "签章");
-        params.put("typepdffile", "1");
+        params.put("keyword", "200201");
+        params.put("typepdffile", "2");
         params.put("signType", "4");
         //params.put("sealid", "25538");
-        //params.put("signatureAppKey","33000000031835");
+        //params.put("signatureAppKey", "33000000059526");
         //log.info("params={}", params);
-        for (int i = 0; i < 200; i++) {
-            String data = HttpConnectionUtils.httpConnectionPost(uuid, url, params);
-            System.out.println(data);
-            if (data.contains("外部系统繁忙,请稍后再试")) {
-                break;
-            }
-        }
-
+        String data = HttpConnectionUtils.httpConnectionPost(uuid, url, params);
+        System.out.println(data);
 
     }
 
@@ -97,8 +91,8 @@ public class CloudSignatureTest {
     public void downLoadFileByHttp() {
         String uuid = UUID.randomUUID().toString();
         log.info("uuid={}", uuid);
-        String httpURL = "http://10.85.159.203:10540/openapiApp/download?key=bizamt/rdm/159134552206211J.pdf";
-        String fileName = "D:\\photo\\" + uuid + ".pdf";
+        String httpURL = "http://ybj.zjzwfw.gov.cn:10540/openapiApp/download?key=bizamt/rdm/1569210553684tLK.pdf";
+        String fileName = "C:\\photo\\" + uuid + ".pdf";
         File file = new File(fileName);
         InputStream inputStream = null;
         FileOutputStream fos = null;

@@ -13,6 +13,8 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.lang.reflect.Field;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.nio.charset.StandardCharsets;
 import java.util.Collections;
 import java.util.HashMap;
@@ -44,11 +46,10 @@ public class CommonUtils {
                 StringWriter sw = new StringWriter();
                 PrintWriter pw = new PrintWriter(sw)
         ) {
-
             e.printStackTrace(pw);
             return sw.toString();
         } catch (Exception ex) {
-            return "ExceptionToString is error";
+            throw new IllegalArgumentException("exceptionToString is error");
         }
     }
 
@@ -230,5 +231,15 @@ public class CommonUtils {
         }
         document.dispose();
         return flag;
+    }
+
+    public static String getLocalhost(String uuid) {
+        try {
+            InetAddress ip = InetAddress.getLocalHost();
+            return ip.getHostAddress();
+        } catch (UnknownHostException e) {
+            log.error("uuid={}, errMsg={}", uuid, e.getMessage());
+            return null;
+        }
     }
 }

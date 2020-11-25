@@ -11,12 +11,21 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class ResultVo<T> {
+
     private T result;
     private boolean isSuccess = false;
+
     private String resultDes;
+
     private String code;
 
     private String requestId;
+
+    private String itemServerIp;
+
+    public static <T> ResultVo<T> instance() {
+        return new ResultVo<>();
+    }
 
     public ResultVo(String requestId) {
         this.requestId = requestId;
