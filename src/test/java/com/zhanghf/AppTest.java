@@ -2,11 +2,16 @@ package com.zhanghf;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.google.common.collect.ImmutableMap;
 import com.zhanghf.po.AddressInfo;
 import com.zhanghf.util.XmlMapUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.assertj.core.util.Lists;
+import org.assertj.core.util.Maps;
 import org.junit.Test;
 
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -199,25 +204,30 @@ public class AppTest {
     public void httpTest() {
         //atg.biz.matterquery.matter.querydetail
         //AtgBizMatterqueryMatterQuerydetailResponse response = null;
-        Map<String, Object> map = XmlMapUtils.xmlToMap(ACCEPTADDRESS2);
-        String dataArea = JSON.toJSONString(map.get("DATAAREA"));
-        JSONObject json = JSON.parseObject(dataArea);
-        JSONObject acceptAddresss = json.getJSONObject("ACCEPT_ADDRESSS");
-        String key = "ACCEPT_ADDRESS";
-        String simpleName = acceptAddresss.get(key).getClass().getSimpleName();
-        try {
-            if ("JSONObject".equals(simpleName)) {
-                AddressInfo adressInfo = acceptAddresss.getObject(key, AddressInfo.class);
-                System.out.println(adressInfo);
-            } else if ("JSONArray".equals(simpleName)) {
-                List<AddressInfo> adressInfos = JSON.parseArray(acceptAddresss.getString(key), AddressInfo.class);
-                for (AddressInfo adressInfo : adressInfos) {
-                    System.out.println(adressInfo);
-                }
-            }
-        } catch (Exception e) {
-            log.error("uuid={}, acceptAddresss={}, errMsg={}", "", acceptAddresss, e.toString());
+//        Map<String, Object> map = XmlMapUtils.xmlToMap(ACCEPTADDRESS2);
+//        String dataArea = JSON.toJSONString(map.get("DATAAREA"));
+//        JSONObject json = JSON.parseObject(dataArea);
+//        JSONObject acceptAddresss = json.getJSONObject("ACCEPT_ADDRESSS");
+//        String key = "ACCEPT_ADDRESS";
+//        String simpleName = acceptAddresss.get(key).getClass().getSimpleName();
+//        try {
+//            if ("JSONObject".equals(simpleName)) {
+//                AddressInfo adressInfo = acceptAddresss.getObject(key, AddressInfo.class);
+//                System.out.println(adressInfo);
+//            } else if ("JSONArray".equals(simpleName)) {
+//                List<AddressInfo> adressInfos = JSON.parseArray(acceptAddresss.getString(key), AddressInfo.class);
+//                for (AddressInfo adressInfo : adressInfos) {
+//                    System.out.println(adressInfo);
+//                }
+//            }
+//        } catch (Exception e) {
+//            log.error("uuid={}, acceptAddresss={}, errMsg={}", "", acceptAddresss, e.toString());
+//        }
+String x = "";
+        if (x == null){
+            throw new NullPointerException();
         }
+
     }
 
 }

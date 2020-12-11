@@ -1,12 +1,14 @@
 package com.zhanghf.util;
 
 import com.alibaba.fastjson.JSON;
+import com.google.common.collect.Maps;
 import com.zhanghf.enums.BusinessCodeEnum;
 import com.zhanghf.vo.ResultVo;
 import lombok.extern.slf4j.Slf4j;
 import org.icepdf.core.pobjects.Document;
 import org.icepdf.core.util.GraphicsRenderingHints;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.ReflectionUtils;
 import org.springframework.util.StringUtils;
 
 import javax.imageio.ImageIO;
@@ -14,12 +16,11 @@ import java.awt.image.BufferedImage;
 import java.io.*;
 import java.lang.reflect.Field;
 import java.net.InetAddress;
+import java.net.NetworkInterface;
 import java.net.UnknownHostException;
 import java.nio.charset.StandardCharsets;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * 公共工具类
@@ -36,21 +37,23 @@ public class CommonUtils {
     }
 
     /**
-     * 将异常信息转换为字符串
+     * 将异常信息转换为字符串(不换行。如果要换行，将\t换成\n)
+     * e.toString() 获取异常名称
+     * stackTraceElements获取出现异常的行数、类名、方法名
      *
      * @param e 异常信息
      * @return 字符串
      */
-    public static String exceptionToString(Exception e) {
-        try (
-                StringWriter sw = new StringWriter();
-                PrintWriter pw = new PrintWriter(sw)
-        ) {
-            e.printStackTrace(pw);
-            return sw.toString();
-        } catch (Exception ex) {
-            throw new IllegalArgumentException("exceptionToString is error");
+    public static String getStackTraceString(Throwable e) {
+        StackTraceElement[] stackTraceElements = e.getStackTrace();
+        StringBuilder builder = new StringBuilder();
+        builder.append(e.toString());
+        if (stackTraceElements != null && stackTraceElements.length > 0) {
+            for (StackTraceElement stackTraceElement : stackTraceElements) {
+                builder.append("\t at ").append(stackTraceElement.toString());
+            }
         }
+        return builder.toString();
     }
 
     public static byte[] convertBytes(String uuid, Object obj) {
@@ -62,7 +65,7 @@ public class CommonUtils {
             outputStream.flush();
             return byteOutputStream.toByteArray();
         } catch (Exception e) {
-            log.error("uuid={}, errMsg={}", uuid, exceptionToString(e));
+            log.error("uuid={}, errMsg={}", uuid, getStackTraceString(e));
             return new byte[0];
         }
 
@@ -134,18 +137,25 @@ public class CommonUtils {
         return resultVo;
     }
 
+    /**
+     * 实体对象转Map
+     *
+     * @param uuid   唯一识别码
+     * @param object 对象
+     * @return map
+     */
     public static Map<String, Object> entityToMap(String uuid, Object object) {
-        Map<String, Object> map = new HashMap<>(16);
+        Map<String, Object> map = Maps.newHashMap();
         try {
             Class<?> clazz = object.getClass();
             for (Field field : clazz.getDeclaredFields()) {
-                field.setAccessible(true);
+                ReflectionUtils.makeAccessible(field);
                 String fieldName = field.getName();
                 Object value = field.get(object);
                 map.put(fieldName, value);
             }
         } catch (IllegalAccessException e) {
-            log.error("uuid={}, errMsg={}", uuid, exceptionToString(e));
+            log.error("uuid={}, errMsg={}", uuid, getStackTraceString(e));
         }
         return map;
     }
@@ -169,7 +179,7 @@ public class CommonUtils {
             }
             return builder.toString();
         } catch (Exception e) {
-            log.error("uuid={}, errMsg={}", uuid, exceptionToString(e));
+            log.error("uuid={}, errMsg={}", uuid, getStackTraceString(e));
         }
         return null;
     }
@@ -201,7 +211,7 @@ public class CommonUtils {
                 image.flush();
             }
         } catch (Exception e) {
-            log.info("uuid={}, filePath={}, pdfFileName={}, jpgFileName={}, errMsg={}", uuid, filePath, pdfFileName, jpgFileName, exceptionToString(e));
+            log.info("uuid={}, filePath={}, pdfFileName={}, jpgFileName={}, errMsg={}", uuid, filePath, pdfFileName, jpgFileName, getStackTraceString(e));
         }
         document.dispose();
     }
@@ -227,10 +237,22 @@ public class CommonUtils {
                 flag = true;
             }
         } catch (Exception e) {
-            log.info("uuid={}, filePath={}, file={}, errMsg={}", uuid, filePath, file, exceptionToString(e));
+            log.info("uuid={}, filePath={}, file={}, errMsg={}", uuid, filePath, file, getStackTraceString(e));
         }
         document.dispose();
         return flag;
+    }
+
+    /**
+     * 获取系统时间
+     *
+     * @param pattern 时间格式
+     * @return 返回时间
+     */
+    public static String getTime(String pattern) {
+        Date date = new Date();
+        SimpleDateFormat dateFormat = new SimpleDateFormat(pattern);
+        return dateFormat.format(date);
     }
 
     public static String getLocalhost(String uuid) {
@@ -241,5 +263,30 @@ public class CommonUtils {
             log.error("uuid={}, errMsg={}", uuid, e.getMessage());
             return null;
         }
+    }
+
+
+    public static List<String> getLocalIpList(String uuid) {
+        List<String> ipList = new ArrayList<>();
+        try {
+            Enumeration<NetworkInterface> networkInterfaces = NetworkInterface.getNetworkInterfaces();
+            while (networkInterfaces.hasMoreElements()) {
+                NetworkInterface networkInterface = networkInterfaces.nextElement();
+                Enumeration<InetAddress> ipAddressEnum = networkInterface.getInetAddresses();
+                while (ipAddressEnum.hasMoreElements()) {
+                    InetAddress ipAddress = ipAddressEnum.nextElement();
+                    String ip = ipAddress.getHostAddress();
+                    log.debug("uuid={}, ipAddress={}, flag={}, ip={}, netWorkName={}", uuid, ipAddress, ipAddress.isLoopbackAddress(), ip, networkInterface.getName());
+                    if (ipAddress.isLoopbackAddress() || ip.contains(":")) {
+                        continue;
+                    }
+                    ipList.add(ip);
+                }
+            }
+            Collections.sort(ipList);
+        } catch (Exception e) {
+            log.error("Failed to get local ip list. uuid={}, errMsg={}", uuid, CommonUtils.getStackTraceString(e));
+        }
+        return ipList;
     }
 }

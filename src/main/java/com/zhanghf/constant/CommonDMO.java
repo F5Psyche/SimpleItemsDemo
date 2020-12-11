@@ -22,6 +22,8 @@ public class CommonDMO {
     public static final String SHA_512_TYPE = "SHA-512";
     public static final String MD5_TYPE = "MD5";
 
+    public static final String COMMON_LOGGER_ERROR_INFO_PARAM = "uuid={}, errMsg={}";
+
     /**
      * 医保机构私钥key
      */

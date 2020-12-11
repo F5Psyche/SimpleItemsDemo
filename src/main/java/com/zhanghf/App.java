@@ -46,7 +46,7 @@ public class App {
             String z = step1(x, y);
             log.info("x={}, y={}, z={}", x, y, z);
         } catch (Exception e) {
-            log.error("errMsg={}", CommonUtils.exceptionToString(e));
+            log.error("errMsg={}", CommonUtils.getStackTraceString(e));
         }
     }
 

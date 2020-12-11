@@ -43,7 +43,7 @@ public class EncryptionUtils {
                 }
                 return builder.toString();
             } catch (Exception e) {
-                log.error("uuid={}, errMsg={}", uuid, CommonUtils.exceptionToString(e));
+                log.error("uuid={}, errMsg={}", uuid, CommonUtils.getStackTraceString(e));
             }
         }
         return encryptionText;
@@ -64,7 +64,7 @@ public class EncryptionUtils {
             algorithm.update(s.getBytes(StandardCharsets.UTF_8));
             return algorithm.digest();
         } catch (Exception e) {
-            log.error("uuid={}, errMsg={}", uuid, CommonUtils.exceptionToString(e));
+            log.error("uuid={}, errMsg={}", uuid, CommonUtils.getStackTraceString(e));
         }
         return null;
     }
@@ -91,7 +91,7 @@ public class EncryptionUtils {
                 buf.append(Long.toString(hash[i] & 0xff, 16));
             }
         } catch (Exception e) {
-            log.error("uuid={}, errMsg={}", uuid, CommonUtils.exceptionToString(e));
+            log.error("uuid={}, errMsg={}", uuid, CommonUtils.getStackTraceString(e));
         }
         return buf.toString();
     }

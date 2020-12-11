@@ -71,7 +71,7 @@ public class HttpConnectionUtils {
             log.info("uuid={}, status={}, message={}, responseContent={}", uuid, status, message, responseContent);
             return responseContent;
         } catch (IOException e) {
-            log.error("uuid={}, errMsg={}", uuid, CommonUtils.exceptionToString(e));
+            log.error("uuid={}, errMsg={}", uuid, CommonUtils.getStackTraceString(e));
             return null;
         }
     }

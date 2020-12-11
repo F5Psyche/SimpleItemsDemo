@@ -34,7 +34,7 @@ public class OssUtils {
             conn.setRequestProperty("User-Agent", "Mozilla/4.0 (compatible; MSIE 5.0; Windows NT; DigExt)");
             return downloadImageByHttp(uuid, conn, file);
         } catch (IOException e) {
-            log.error(CommonParams.COMMON_LOGGER_ERROR_INFO_PARAM, uuid, CommonUtils.exceptionToString(e));
+            log.error(CommonParams.COMMON_LOGGER_ERROR_INFO_PARAM, uuid, CommonUtils.getStackTraceString(e));
             return false;
         }
     }
@@ -50,7 +50,7 @@ public class OssUtils {
             byte[] getData = bos.toByteArray();
             return downloadImageByHttp(uuid, file, getData);
         } catch (Exception e) {
-            log.error(CommonParams.COMMON_LOGGER_ERROR_INFO_PARAM, uuid, CommonUtils.exceptionToString(e));
+            log.error(CommonParams.COMMON_LOGGER_ERROR_INFO_PARAM, uuid, CommonUtils.getStackTraceString(e));
             return false;
         }
     }
@@ -60,7 +60,7 @@ public class OssUtils {
             fos.write(getData);
             return true;
         } catch (IOException e) {
-            log.error(CommonParams.COMMON_LOGGER_ERROR_INFO_PARAM, uuid, CommonUtils.exceptionToString(e));
+            log.error(CommonParams.COMMON_LOGGER_ERROR_INFO_PARAM, uuid, CommonUtils.getStackTraceString(e));
             return false;
         }
     }
@@ -82,7 +82,7 @@ public class OssUtils {
                 log.error(CommonParams.COMMON_LOGGER_ERROR_INFO_PARAM, uuid, "上传失败");
             }
         } catch (Exception e) {
-            log.error(CommonParams.COMMON_LOGGER_ERROR_INFO_PARAM, uuid, CommonUtils.exceptionToString(e));
+            log.error(CommonParams.COMMON_LOGGER_ERROR_INFO_PARAM, uuid, CommonUtils.getStackTraceString(e));
         } finally {
             filePost.releaseConnection();
             file.delete();
